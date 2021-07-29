@@ -46,7 +46,13 @@ The **name** of the extension in **package.json** needs the additional prefix `@
 
 <br>
 
-## 2. Build the docker images
+## 2. Update config map
+
+Set the env `FEATURE_ADDITIONAL_SYSTEM_WIDE_EXTENSIONS_PATH` in the config-map and provide the path to the extensions folder. In the case of the example above it would be `/app/embedded-extensions`.
+
+<br>
+
+## 3. Build the docker images
 
 The extensions need to get copied into the docker images of service-ai and service-resources. 
 
@@ -98,13 +104,12 @@ Run the provided build script `cognigy-build-embedded`. for **service-ai** and *
 
 <br>
 
+## 4. Deploy 
+
 Deploy both images to your on-premises cognigy installation.
 
 <br>
 
-## 4. Update config map
-
-Set the env `FEATURE_ADDITIONAL_SYSTEM_WIDE_EXTENSIONS_PATH` in the config-map and provide the path to the extensions folder. In the case of the example above it would be `/app/embedded-extensions`.
 
 <br><br>
 
