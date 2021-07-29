@@ -1,0 +1,63 @@
+#!/bin/bash
+
+# REGISTRY_URL='yourcontainerregistry.azurecr.io'
+REGISTRY_URL='cognigydevelopment.azurecr.io'
+
+get_embedded_dockerfile()
+{
+	echo $(pwd)/dockerfiles/$1.Dockerfile	
+}
+
+get_embedded_image_name()
+{
+	echo $REGISTRY_URL/$1:embedded-extensions-$2
+}
+
+build_service_image()
+{
+	DOCKER_BUILDKIT=1 \
+	docker build \
+		--progress=plain \
+		--file $(get_embedded_dockerfile $1) \
+		--tag $(get_embedded_image_name $1 $2) \
+		.
+}
+
+set -e
+
+
+if [ $# != 0 ]; then
+	
+	#	service-ai:
+	cd "$(dirname "$0")"
+
+	cd ..
+
+	hash="embedded-extensions-$2"
+	image="$REGISTRY_URL/$1:$hash"
+
+	echo "###############################################################"
+	echo "# $1"
+	echo "# $image"
+	echo "###############################################################"
+
+	echo ""
+	
+	if [[ "$(DOCKER_CLI_EXPERIMENTAL=enabled docker manifest inspect --insecure $image 2> /dev/null)" == "" ]]; then
+		echo "Building docker image..."
+		build_service_image $1 $2
+
+		echo ""
+
+		if [[ -z "${LOCAL_ONLY}" ]]; then
+			echo "Pushing docker image..."
+			docker push "$image"
+			echo ""
+		fi
+
+		echo "Success!"
+		else
+			echo "Skipping...image already exists on the remote!"
+	fi
+fi
+
