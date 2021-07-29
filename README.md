@@ -36,8 +36,7 @@ The **name** of the extension in **package.json** needs the additional prefix `@
 ```json
 // package.json
 {
-  "name": "@embedded/random-cat-image",  
-  ...
+  "name": "@embedded/random-cat-image",    
 }
 
 // folder name:
