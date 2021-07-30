@@ -4,7 +4,7 @@ This repository contains documentation, instructions and files our on-premises c
 
 <br>
 
-# Embedded Extensions
+# Embeddable Extensions
 
 <br>
 
